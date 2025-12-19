@@ -7,5 +7,7 @@ Route::get('/', function () {
 });
 
 Route::get('/se', function () {
-    return "<h1>SE BUU</h1>";
+    return "template.default";
 });
+
+Route::get('/mycontroller', [App\Http\controllers\MyController::class, 'index']);

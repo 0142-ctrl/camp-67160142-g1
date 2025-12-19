@@ -1,106 +1,130 @@
-<!-- file resources/views/html101.blade.php -->
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <title>ฟอร์มสมัครสมาชิก</title>
-    <style>
-        body {
-            font-family: "TH SarabunPSK", sans-serif;
-            font-size: 22px;
-            background-color: #add8e6;   
+@extends('template.default')
+@section('content')
+    <h2>แบบฟอร์มสมัครสมาชิก</h2>
+    <form id="registerForm">
 
-            display: flex;
-            justify-content: center;   
-            align-items: center;      
-            height: 100vh;            
-            margin: 0;
-        }
-
-        .form-container {
-            background: white;
-            padding: 25px 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
-
-        label {
-            width: 150px;
-            display: inline-block;
-            vertical-align: top;
-            margin-bottom: 10px;
-        }
-
-        input, textarea {
-            font-size: 18px;
-            padding: 5px;
-            margin-bottom: 10px;
-        }
-
-        textarea {
-            width: 300px;
-            height: 100px;
-        }
-
-        button {
-            font-size: 18px;
-            padding: 5px 15px;
-            margin-top: 15px;
-        }
-
-        .submit-btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-        }
-
-        .reset-btn {
-            background-color: white;
-            border: 1px solid #333;
-        }
-
-    </style>
-</head>
-
-<body>
-
-    <div class="form-container">
-        <h2>แบบฟอร์มสมัครสมาชิก</h2>
-
-        <form>
-
+        <div class="field">
             <label>ชื่อ</label>
-            <input type="text" name="fname" required><br>
+            <input type="text" name="fname">
+            <span class="check">✔</span>
+            <small class="error-text"></small>
+        </div>
 
+        <div class="field">
             <label>สกุล</label>
-            <input type="text" name="lname" required><br>
+            <input type="text" name="lname">
+            <span class="check">✔</span>
+            <small class="error-text"></small>
+        </div>
 
+        <div class="field">
             <label>วันเดือนปีเกิด</label>
-            <input type="date" name="birth" required><br>
+            <input type="date" name="birth">
+            <span class="check">✔</span>
+            <small class="error-text"></small>
+        </div>
 
+        <div class="field">
             <label>เพศ</label>
-            <input type="radio" name="gender" value="ชาย"> ชาย
-            <input type="radio" name="gender" value="หญิง"> หญิง <br>
+            <input type="radio" name="gender"> ชาย
+            <input type="radio" name="gender"> หญิง
+            <small class="error-text"></small>
+        </div>
 
+        <div class="field">
             <label>รูป</label>
-            <input type="file" name="photo" accept="image/*"><br>
+            <input type="file" name="photo">
+            <span class="check">✔</span>
+            <small class="error-text"></small>
+        </div>
 
+        <div class="field">
             <label>ที่อยู่</label>
-            <textarea name="address"></textarea><br>
+            <textarea name="address"></textarea>
+            <span class="check">✔</span>
+            <small class="error-text"></small>
+        </div>
 
+        <div class="field">
             <label>สีที่ชอบ</label>
-            <input type="text" name="color" placeholder="พิมพ์สีที่ชอบ"><br>
+            <input type="text" name="color">
+            <span class="check">✔</span>
+            <small class="error-text"></small>
+        </div>
 
+        <div class="field">
             <label>แนวเพลงที่ชอบ</label>
-            <input type="text" name="music" placeholder="พิมพ์แนวเพลงที่ชอบ"><br>
+            <input type="text" name="music">
+            <span class="check">✔</span>
+            <small class="error-text"></small>
+        </div>
 
-            <input type="checkbox" required> ยินยอมให้เก็บข้อมูล<br><br>
+        <div class="field">
+            <input type="checkbox" id="agree"> ยินยอมให้เก็บข้อมูล
+            <small class="error-text"></small>
+        </div>
 
-            <button type="reset" class="reset-btn">Reset</button>
-            <button type="submit" class="submit-btn">บันทึก</button>
+        <button type="reset" class="reset-btn">Reset</button>
+        <button type="submit" class="submit-btn">บันทึก</button>
 
-        </form>
+    </form>
     </div>
 
-</body>
-</html>
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            let valid = true;
+
+            let fields = this.querySelectorAll(".field");
+
+            fields.forEach(field => {
+                let input = field.querySelector("input, textarea");
+                let errorText = field.querySelector(".error-text");
+                let check = field.querySelector(".check");
+
+                if (input && input.type !== "radio" && input.type !== "checkbox") {
+                    if (input.value.trim() === "") {
+                        input.classList.add("error");
+                        input.classList.remove("success");
+                        errorText.textContent = "กรุณากรอกข้อมูล";
+                        if (check) check.style.display = "none";
+                        valid = false;
+                    } else {
+                        input.classList.remove("error");
+                        input.classList.add("success");
+                        errorText.textContent = "";
+                        if (check) check.style.display = "inline";
+                    }
+                }
+            });
+
+            // ตรวจเพศ
+            let genderChecked = document.querySelector("input[name=gender]:checked");
+            let genderError = document.querySelector("input[name=gender]").closest(".field").querySelector(
+                ".error-text");
+
+            if (!genderChecked) {
+                genderError.textContent = "กรุณาเลือกเพศ";
+                valid = false;
+            } else {
+                genderError.textContent = "";
+            }
+
+            // ตรวจ checkbox
+            let agree = document.getElementById("agree");
+            let agreeError = agree.closest(".field").querySelector(".error-text");
+
+            if (!agree.checked) {
+                agreeError.textContent = "กรุณายินยอม";
+                valid = false;
+            } else {
+                agreeError.textContent = "";
+            }
+
+            if (valid) {
+                alert("บันทึกข้อมูลเรียบร้อย");
+                this.submit();
+            }
+        });
+    </script>
+@endsection
