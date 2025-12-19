@@ -71,60 +71,57 @@
     </div>
 
     <script>
-        document.getElementById("registerForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            let valid = true;
+const form = document.getElementById("registerForm");
 
-            let fields = this.querySelectorAll(".field");
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    let valid = true;
 
-            fields.forEach(field => {
-                let input = field.querySelector("input, textarea");
-                let errorText = field.querySelector(".error-text");
-                let check = field.querySelector(".check");
+    form.querySelectorAll("input, textarea").forEach(input => {
+        input.classList.remove("error", "success");
+    });
+    form.querySelectorAll(".check").forEach(c => c.style.display = "none");
+    form.querySelectorAll(".error-text").forEach(e => e.textContent = "");
 
-                if (input && input.type !== "radio" && input.type !== "checkbox") {
-                    if (input.value.trim() === "") {
-                        input.classList.add("error");
-                        input.classList.remove("success");
-                        errorText.textContent = "กรุณากรอกข้อมูล";
-                        if (check) check.style.display = "none";
-                        valid = false;
-                    } else {
-                        input.classList.remove("error");
-                        input.classList.add("success");
-                        errorText.textContent = "";
-                        if (check) check.style.display = "inline";
-                    }
-                }
-            });
+    form.querySelectorAll("input:not([type=radio]):not([type=checkbox]), textarea")
+        .forEach(input => {
+            let field = input.closest(".field");
+            let errorText = field.querySelector(".error-text");
+            let check = field.querySelector(".check");
 
-            // ตรวจเพศ
-            let genderChecked = document.querySelector("input[name=gender]:checked");
-            let genderError = document.querySelector("input[name=gender]").closest(".field").querySelector(
-                ".error-text");
-
-            if (!genderChecked) {
-                genderError.textContent = "กรุณาเลือกเพศ";
+            if (input.value.trim() === "") {
+                input.classList.add("error");
+                errorText.textContent = "กรุณากรอกข้อมูล";
                 valid = false;
             } else {
-                genderError.textContent = "";
-            }
-
-            // ตรวจ checkbox
-            let agree = document.getElementById("agree");
-            let agreeError = agree.closest(".field").querySelector(".error-text");
-
-            if (!agree.checked) {
-                agreeError.textContent = "กรุณายินยอม";
-                valid = false;
-            } else {
-                agreeError.textContent = "";
-            }
-
-            if (valid) {
-                alert("บันทึกข้อมูลเรียบร้อย");
-                this.submit();
+                input.classList.add("success");
+                if (check) check.style.display = "inline";
             }
         });
-    </script>
+
+    let genderChecked = document.querySelector("input[name=gender]:checked");
+    let genderError = document.querySelector("input[name=gender]")
+        .closest(".field").querySelector(".error-text");
+
+    if (!genderChecked) {
+        genderError.textContent = "กรุณาเลือกเพศ";
+        valid = false;
+    }
+
+    let agree = document.getElementById("agree");
+    let agreeError = agree.closest(".field").querySelector(".error-text");
+
+    if (!agree.checked) {
+        agreeError.textContent = "กรุณายินยอม";
+        valid = false;
+    }
+
+    if (valid) {
+        alert("บันทึกข้อมูลเรียบร้อย");
+        //this.submit();
+    }
+});
+</script>
+
+
 @endsection
