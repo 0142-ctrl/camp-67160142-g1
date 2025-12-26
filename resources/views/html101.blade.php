@@ -1,7 +1,8 @@
 @extends('template.default')
 @section('content')
     <h2>แบบฟอร์มสมัครสมาชิก</h2>
-    <form id="registerForm">
+    <form action="/submitForm" method="POST" enctype="multipart/form-data">
+    @csrf
 
         <div class="field">
             <label>ชื่อ</label>
@@ -26,8 +27,8 @@
 
         <div class="field">
             <label>เพศ</label>
-            <input type="radio" name="gender"> ชาย
-            <input type="radio" name="gender"> หญิง
+            <input type="radio" name="gender"value="ผู้ชาย"> ชาย
+            <input type="radio" name="gender"value="ผู้หญิง"> หญิง
             <small class="error-text"></small>
         </div>
 
@@ -118,7 +119,7 @@ form.addEventListener("submit", function (e) {
 
     if (valid) {
         alert("บันทึกข้อมูลเรียบร้อย");
-        //this.submit();
+        this.submit();
     }
 });
 </script>

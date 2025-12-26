@@ -14,4 +14,18 @@ class MyController extends Controller
     function index(){
         return view('myview.index');
     }
+    function submitForm(Request $req)
+    {
+        $data = [
+            'fname'    => $req->fname,
+            'lname'    => $req->lname,
+            'birthday' => $req->birth,
+            'gender'   => $req->gender,
+            'address'  => $req->address,
+            'music'    => $req->music,
+            'favcolor' => $req->color,
+        ];
+
+    return view('myview.html101_view', compact('data'));
+}
 }

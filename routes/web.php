@@ -10,8 +10,10 @@ Route::get('/se', function () {
     return "template.default";
 });
 
-Route::get('/mycontroller', [App\Http\controllers\MyController::class, 'index']);
-Route::get('/calculate', [App\Http\controllers\MyController::class, 'info']);
-Route::post('/calculate', [App\Http\controllers\MyController::class, 'calculate']);
+Route::get('/mycontroller', [App\Http\Controllers\MyController::class, 'index']);
+Route::post('/submitForm', [App\Http\Controllers\MyController::class, 'submitForm']);
 
-Route::resource('/flights', [App\Http\controllers\MyController::class, 'class']);
+//Route::get('/calculate', [App\Http\Controllers\MyController::class, 'info']);
+//Route::post('/calculate', [App\Http\Controllers\MyController::class, 'calculate']);
+
+//Route::resource('/flights', [App\Http\Controllers\MyController::class, 'class']);
