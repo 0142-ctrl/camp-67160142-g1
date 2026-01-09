@@ -12,6 +12,8 @@ Route::get('/se', function () {
 
 Route::get('/mycontroller', [App\Http\Controllers\MyController::class, 'index']);
 Route::post('/submitForm', [App\Http\Controllers\MyController::class, 'submitForm']);
+Route::resource('/pokedexs', App\Http\Controllers\PokedexController::class);
+Route::get('/pokedexs/{id}', [PokedexController::class, 'show']);
 
 //Route::get('/calculate', [App\Http\Controllers\MyController::class, 'info']);
 //Route::post('/calculate', [App\Http\Controllers\MyController::class, 'calculate']);

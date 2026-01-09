@@ -5,7 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <title>ฟอร์มสมัครสมาชิก</title>
-
+    <link rel = "stylesheet" href="{{ asset('css/bootstrap.css') }}">
+        <title> Saran </title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Mitr:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: "TH SarabunPSK", sans-serif;
